@@ -31,21 +31,38 @@ screen.onkey(snake.right, 'Right')
 x_cords = outline.outline_xcor()
 y_cords = outline.outline_ycor()
 
-while state_of_game:
-    time.sleep(0.05)
-    snake.move_snake()
-    if snake.head.distance(food) < 15:
-        food.regen()
-        score.increment()
-        snake.add_length()
-    if snake.head.xcor() < x_cords[0] or snake.head.xcor() > x_cords[1] or snake.head.ycor() < y_cords[0] or snake.head.ycor() > y_cords[1]:
-        state_of_game = False
-        snake.clear_snake_parts()
-        score.game_finished()
-    for part in snake.snake_parts[1:] :
-        if snake.head.distance(part) < 5:
+
+def snake_game():
+    state_of_game = True
+    while state_of_game:
+        time.sleep(0.07)
+        snake.move_snake()
+        if snake.head.distance(food) < 15:
+            food.regen()
+            score.increment()
+            snake.add_length()
+        if snake.head.xcor() < x_cords[0] or snake.head.xcor() > x_cords[1] or snake.head.ycor() < y_cords[0] or snake.head.ycor() > y_cords[1]:
             state_of_game = False
             snake.clear_snake_parts()
             score.game_finished()
-    screen.update()
+        for part in snake.snake_parts[1:]:
+            if snake.head.distance(part) < 5:
+                state_of_game = False
+                snake.clear_snake_parts()
+                food.remove_food()
+                score.game_finished()
+        screen.update()
+snake_game()
+# select = True
+# while select:
+#     user_choice = screen.textinput('You lost!', 'Do you wanna play again (yes/no):')
+#     if user_choice.lower() == 'yes':
+#         select = False
+#         snake_game()
+#         screen.update()
+#     elif user_choice.lower() == 'no':
+#         select = False
+#         exit()
+#     else:
+#         user_choice == screen.textinput('You lost!', 'Do you wanna play again (yes/no):')
 screen.exitonclick()

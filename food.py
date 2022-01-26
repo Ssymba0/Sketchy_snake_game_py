@@ -16,3 +16,7 @@ class Food(Turtle):
         x_cor = random.randint(-290, 290)
         y_cor = random.randint(-230, 230)
         self.goto(x=x_cor, y=y_cor)
+        
+    def remove_food(self):
+        self.clear()
+        self.hideturtle()

@@ -7,7 +7,8 @@ class Outline(Turtle):
         self.up()
         self.goto(-300, -240)
         self.down()
-        self.color('white')
+        self.color('brown')
+        self.width(10)
         for i in range(4):
             heading = self.heading()
             if i % 2:
