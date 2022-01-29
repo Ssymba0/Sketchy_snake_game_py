@@ -51,11 +51,12 @@ class Snake:
         new_part.color('white')
         new_part.shapesize(stretch_len=0.5, stretch_wid=0.5)
         new_part.up()
-        # x_cor = self.snake_parts[-1].xcor()
-        # y_cor = self.snake_parts[-1].ycor()
-        # new_part.goto(x_cor, (y_cor + 20 if y_cor > 0 else y_cor -20))
         new_part.goto(self.snake_parts[-1].position())
         self.snake_parts.append(new_part)
+    
     def clear_snake_parts(self):
         for snake in self.snake_parts:
+            snake.reset()
             snake.hideturtle()
+            
+        self.snake_parts.clear()

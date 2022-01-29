@@ -8,32 +8,33 @@ import time
 # Screen settings
 screen = Screen()
 screen.setup(width=800, height=600)
-screen.bgcolor('black')
 screen.title('Snake Game')
-screen.tracer(0)
-
-# creating objects needed
-snake = Snake()
-food = Food()
-score = Score()
-outline = Outline()
-
-state_of_game = True
-
-# Getting input from user
-screen.listen()
-screen.onkey(snake.up, 'Up')
-screen.onkey(snake.down, 'Down')
-screen.onkey(snake.left, 'Left')
-screen.onkey(snake.right, 'Right')
-
-# Outline cordinnates
-x_cords = outline.outline_xcor()
-y_cords = outline.outline_ycor()
 
 
 def snake_game():
+    screen.tracer(0)
+    screen.bgcolor('black')
+    
+    # creating objects needed
+    snake = Snake()
+    food = Food()
+    score = Score()
+    outline = Outline()
+
     state_of_game = True
+
+    # Getting input from user
+    screen.listen()
+    screen.onkey(snake.up, 'Up')
+    screen.onkey(snake.down, 'Down')
+    screen.onkey(snake.left, 'Left')
+    screen.onkey(snake.right, 'Right')
+    screen.onkey(screen.bye, 'Escape')
+
+    # Outline cordinnates
+    x_cords = outline.outline_xcor()
+    y_cords = outline.outline_ycor()
+    
     while state_of_game:
         time.sleep(0.07)
         snake.move_snake()
@@ -49,20 +50,16 @@ def snake_game():
             if snake.head.distance(part) < 5:
                 state_of_game = False
                 snake.clear_snake_parts()
-                food.remove_food()
                 score.game_finished()
         screen.update()
+        
+    # prompt user to choose to restart the game
+    if state_of_game == False:
+        answer = screen.textinput('GAME OVER', 'Would you like to play again?(y/n)')
+        if answer == 'y':
+            screen.clearscreen()
+            snake_game()
+        else:
+            screen.bye()
 snake_game()
-# select = True
-# while select:
-#     user_choice = screen.textinput('You lost!', 'Do you wanna play again (yes/no):')
-#     if user_choice.lower() == 'yes':
-#         select = False
-#         snake_game()
-#         screen.update()
-#     elif user_choice.lower() == 'no':
-#         select = False
-#         exit()
-#     else:
-#         user_choice == screen.textinput('You lost!', 'Do you wanna play again (yes/no):')
 screen.exitonclick()
